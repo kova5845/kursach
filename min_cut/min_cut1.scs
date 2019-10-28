@@ -1,0 +1,121 @@
+
+scp_program -> run_min_cut1 (*
+	
+	-> rrel_params: ... (*
+
+		-> rrel_1: rrel_in: _graph;;
+		-> rrel_2: rrel_in: _test_number;;
+
+	*);;
+
+	-> rrel_operators: ... (*
+
+	-> rrel_init: ..start (*
+		<- print;;
+		-> rrel_1: rrel_fixed: rrel_scp_const: [Тест ];; 		
+		=> nrel_goto: ..print_test_numbers;;	
+	*);;
+
+	-> ..print_test_numbers (*
+		<- printNl;;
+		-> rrel_1: rrel_fixed: rrel_scp_var: _test_number;; 		
+		=> nrel_goto: ..genSetRaz;;
+	*);;
+
+	-> ..genSetRaz (*
+
+		<- genEl;;
+		-> rrel_1: rrel_assign: rrel_node: rrel_scp_var: _set_razrez;;
+		=> nrel_goto: ..get_all_vertices;;
+
+	*);;
+
+	-> ..get_all_vertices (*
+		 <- searchSetStr5;;
+		-> rrel_1: rrel_fixed: rrel_scp_var: _graph;;
+		-> rrel_2: rrel_assign: rrel_pos_const_perm: rrel_scp_var: _arc1;;
+		-> rrel_3: rrel_assign: rrel_scp_var: _vertex_of_graph;;
+		-> rrel_4: rrel_assign: rrel_pos_const_perm: rrel_scp_var: _arc2;;
+		-> rrel_5: rrel_fixed: rrel_scp_const: rrel_node;;
+		-> rrel_set_3: rrel_assign: rrel_scp_var: _vertices;;
+		=> nrel_then: ..get_vertex;;		
+		=> nrel_else: ..return;;	
+	*);;
+
+	-> ..get_vertex (*
+		<- searchElStr3;;
+		-> rrel_1: rrel_fixed: rrel_scp_var: _vertices;;
+		-> rrel_2: rrel_assign: rrel_scp_var: _deleted_arc;;
+		-> rrel_3: rrel_assign: rrel_scp_var: _vertex;;
+		=> nrel_then: ..delete_vertex;;
+		=> nrel_else: ..erase_vertices;;
+	*);;
+
+	-> ..delete_vertex (*
+		<- eraseEl;;
+		-> rrel_1: rrel_fixed: rrel_erase: rrel_scp_var: _deleted_arc;;
+		=> nrel_goto: ..create_set_not_checked_arcs;;	
+	*);;
+
+	-> ..create_set_not_checked_arcs (*
+		 <- searchSetStr5;;
+		-> rrel_1: rrel_fixed: rrel_scp_var: _graph;;
+		-> rrel_2: rrel_assign: rrel_pos_const_perm: rrel_scp_var: _arc1;;
+		-> rrel_3: rrel_assign: rrel_scp_var: _vertex_of_graph;;
+		-> rrel_4: rrel_assign: rrel_pos_const_perm: rrel_scp_var: _arc2;;
+		-> rrel_5: rrel_fixed: rrel_scp_const: rrel_edge;;
+		-> rrel_set_3: rrel_assign: rrel_scp_var: _edgeses;;
+		=> nrel_then: ..call_FIND_ALL_CYCLES;;
+		=> nrel_else: ..return;;	
+	*);;
+
+	-> ..call_FIND_ALL_CYCLES (*
+		<- call;;
+		-> rrel_1: rrel_fixed: rrel_scp_const: run_min_cut2;;
+		-> rrel_2: rrel_fixed: rrel_scp_const: ... (*
+			-> rrel_1: rrel_fixed: rrel_scp_var: _vertex;;
+			-> rrel_2: rrel_fixed: rrel_scp_var: _edgeses;;
+			-> rrel_3: rrel_fixed: rrel_scp_var: _vertices;;
+			-> rrel_4: rrel_fixed: rrel_scp_var: _set_razrez;;
+		*);;
+		-> rrel_3: rrel_assign: rrel_scp_var: _descr2;;
+		=> nrel_goto: ..wait_FIND_ALL_CYCLES;;
+	*);;
+
+	-> ..wait_FIND_ALL_CYCLES (*
+		<- waitReturn;;
+		-> rrel_1: rrel_fixed: rrel_scp_var: _descr2;;
+		=> nrel_goto: ..get_vertex;;
+	*);;
+
+
+	-> ..erase_vertices (*
+		<- eraseEl;;
+		-> rrel_1: rrel_fixed: rrel_scp_var: rrel_erase: _vertices;;
+		=> nrel_goto: ..call_min_raz;; 
+	*);;
+
+	-> ..call_min_raz (*
+
+		<- call;;
+		-> rrel_1: rrel_fixed: rrel_scp_const: run_min_cut4;;
+		-> rrel_2: rrel_fixed: rrel_scp_const: ... (*
+			-> rrel_1: rrel_fixed: rrel_scp_var: _set_razrez;;
+		*);;
+		-> rrel_3: rrel_assign: rrel_scp_var: _descrip;;
+		=> nrel_goto: ..wait_min_raz;;
+
+	*);;
+
+	-> ..wait_min_raz (*
+		<- waitReturn;;
+		-> rrel_1: rrel_fixed: rrel_scp_var: _descrip;;
+		=> nrel_goto: ..return;;
+	*);;
+
+	-> ..return (*
+		<- return;;
+	*);;
+
+	*);;
+*);;	

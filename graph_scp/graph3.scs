@@ -1,0 +1,25 @@
+graph -> G3 (*
+        -> rrel_node: V15;;
+        -> rrel_node: V16;;
+        -> rrel_node: V17;;
+        -> rrel_node: V18;;
+        -> rrel_node: V19;;
+        -> rrel_node: V20;;
+
+        -> rrel_edge: (V15 ->  V16) (* ->  nrel_weight: [1];; *);;
+        -> rrel_edge: (V15 ->  V20) (* ->  nrel_weight: [6];; *);;
+        -> rrel_edge: (V16 ->  V17) (* ->  nrel_weight: [2];; *);;
+        -> rrel_edge: (V16 ->  V15) (* ->  nrel_weight: [1];; *);;
+        -> rrel_edge: (V16 ->  V19) (* ->  nrel_weight: [7];; *);;
+        -> rrel_edge: (V17 ->  V18) (* ->  nrel_weight: [3];; *);;
+        -> rrel_edge: (V17 ->  V16) (* ->  nrel_weight: [2];; *);;
+        -> rrel_edge: (V18 ->  V17) (* ->  nrel_weight: [3];; *);;
+        -> rrel_edge: (V18 ->  V19) (* ->  nrel_weight: [4];; *);;
+        -> rrel_edge: (V19 ->  V20) (* ->  nrel_weight: [5];; *);;
+        -> rrel_edge: (V19 ->  V16) (* ->  nrel_weight: [7];; *);;
+        -> rrel_edge: (V19 ->  V18) (* ->  nrel_weight: [4];; *);;
+        -> rrel_edge: (V20 ->  V15) (* ->  nrel_weight: [6];; *);;
+        -> rrel_edge: (V20 ->  V19) (* ->  nrel_weight: [5];; *);;
+
+
+*);;

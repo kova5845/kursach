@@ -1,0 +1,14 @@
+graph -> G4;;
+G4 -> rrel_edges: ..edges;;
+G4 -> rrel_nodes: ..nodes;;
+
+..nodes -> V1;;
+..nodes -> V2;;
+..nodes -> V3;;
+
+..edges -> (V1 ->  V2) (* ->  nrel_weight: [5];; *);;
+..edges -> (V3 ->  V2) (* ->  nrel_weight: [6];; *);;
+..edges -> (V2 ->  V3) (* ->  nrel_weight: [6];; *);;
+..edges -> (V2 ->  V1) (* ->  nrel_weight: [5];; *);;
+
+

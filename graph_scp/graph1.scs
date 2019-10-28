@@ -1,0 +1,18 @@
+graph -> G1 (*
+	-> rrel_node: V5;;
+	-> rrel_node: V6;;
+	-> rrel_node: V7;;
+	-> rrel_node: V8;;
+	-> rrel_node: V9;;
+
+	-> rrel_edge: (V5 ->  V6) (* ->  nrel_weight: [1];; *);;
+	-> rrel_edge: (V5 ->  V8) (* ->  nrel_weight: [3];; *);;
+	-> rrel_edge: (V6 ->  V9) (* ->  nrel_weight: [4];; *);;
+	-> rrel_edge: (V7 ->  V8) (* ->  nrel_weight: [2];; *);;
+	-> rrel_edge: (V7 ->  V9) (* ->  nrel_weight: [5];; *);;
+	-> rrel_edge: (V6 ->  V5) (* ->  nrel_weight: [1];; *);;
+	-> rrel_edge: (V8 ->  V5) (* ->  nrel_weight: [3];; *);;
+	-> rrel_edge: (V9 ->  V6) (* ->  nrel_weight: [4];; *);;
+	-> rrel_edge: (V8 ->  V7) (* ->  nrel_weight: [2];; *);;
+	-> rrel_edge: (V9 ->  V7) (* ->  nrel_weight: [5];; *);;
+*);;

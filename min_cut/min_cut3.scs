@@ -1,0 +1,110 @@
+scp_program -> run_min_cut3 (*
+
+	-> rrel_params: ... (*
+
+		-> rrel_1: rrel_in: _vertex;;
+		-> rrel_2: rrel_in: _edgeses;;
+		-> rrel_3: rrel_in: _vertices;;
+		-> rrel_4: rrel_in: _max;;
+		-> rrel_5: rrel_in: _max_ves;;
+		-> rrel_6: rrel_in: _max_ostatok;;
+
+	*);;
+
+	-> rrel_operators: ... (*
+
+	-> rrel_init: ..search_edge (*
+
+		<- searchElStr3;;
+		-> rrel_1: rrel_fixed: rrel_scp_var: _vertex;;
+		-> rrel_2: rrel_assign: rrel_pos_const_perm: rrel_scp_var: _edge_ves;;
+		-> rrel_3: rrel_assign: rrel_scp_var: _ver_dop;;
+		=> nrel_then: ..ves_poisk;;
+		=> nrel_else: ..return;;
+
+	*);;
+
+	-> ..ves_poisk (*
+
+		<- searchElStr5;;
+		-> rrel_1: rrel_fixed: rrel_scp_var: _edge_ves;;
+		-> rrel_2: rrel_assign: rrel_pos_const_perm: rrel_scp_var: _arc1;;
+		-> rrel_3: rrel_assign: rrel_scp_var: _ves_q;;
+		-> rrel_4: rrel_assign: rrel_pos_const_perm: rrel_scp_var: _arc2;;
+		-> rrel_5: rrel_fixed: rrel_scp_const: nrel_weight;;
+		=> nrel_then: ..sravn;;
+		=> nrel_else: ..return;;
+
+	*);; 
+
+	-> ..sravn (*
+
+		<- ifEq;;
+		->rrel_1: rrel_fixed: rrel_scp_var: _ves_q;;
+		->rrel_2: rrel_fixed: rrel_scp_var: _max_ves;;
+		=> nrel_then: ..izmena;;
+		=> nrel_else: ..erase_edge1;;
+	*);;
+
+	-> ..izmena (*
+		
+		<- searchElStr3;;
+		-> rrel_1: rrel_fixed: rrel_scp_var: _ver_dop;;
+		-> rrel_2: rrel_assign: rrel_pos_const_perm: rrel_scp_var: _edge_izm;;
+		-> rrel_3: rrel_fixed: rrel_scp_var: _vertex;;
+		=> nrel_then: ..davai;;
+		=> nrel_else: ..return;;
+
+	*);;
+
+	-> ..davai (*
+
+		<- searchElStr5;;
+		-> rrel_1: rrel_fixed: rrel_scp_var: _edge_izm;;
+		-> rrel_2: rrel_assign: rrel_pos_const_perm: rrel_scp_var: _arc1;;
+		-> rrel_3: rrel_assign: rrel_scp_var: _ves_izm;;
+		-> rrel_4: rrel_assign: rrel_pos_const_perm: rrel_scp_var: _arc2;;
+		-> rrel_5: rrel_fixed: rrel_scp_const: nrel_weight;;
+		=> nrel_then: ..davai1;;
+		=> nrel_else: ..return;;
+
+	*);;  
+
+	-> ..davai1 (*
+
+		<- contMult;;
+		-> rrel_1: rrel_fixed: rrel_scp_var: _ves_izm;;
+		-> rrel_2: rrel_fixed: rrel_scp_var: _ves_izm;;
+		-> rrel_3: rrel_fixed: rrel_scp_const: [0];;
+		=> nrel_goto: ..dav_sum;;
+
+	*);;
+
+	-> ..dav_sum (*
+
+		<- contAdd;;
+		-> rrel_1: rrel_fixed: rrel_scp_var: _ves_izm;;
+		-> rrel_2: rrel_fixed: rrel_scp_var: _ves_izm;;
+		-> rrel_3: rrel_fixed: rrel_scp_var: _max_ostatok;;
+		=> nrel_goto: ..erase_edge1;;
+
+	*);;
+
+	-> ..erase_edge1 (*
+
+		<- eraseEl;;
+		-> rrel_1: rrel_fixed: rrel_erase: rrel_scp_var: _edge_ves;;
+		=> nrel_goto: ..search_edge;;
+
+	*);;	
+
+		
+
+	-> ..return (*
+		<- return;;
+	*);;
+
+*);;
+*);;
+
+

@@ -1,0 +1,523 @@
+extern "C" {
+#include "sc_memory_headers.h"
+#include "sc_helper.h"
+#include "utils.h"
+}
+
+#include <stdio.h>
+#include <iostream>
+#include <glib.h>
+#include <unistd.h>
+#include <assert.h>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+sc_memory_context *context;
+
+sc_addr graph, rrel_edges, rrel_nodes,
+nrel_weight;
+
+/*void glue(sc_addr ver) {
+    sc_addr edge_max, ver_max, ver_dop, edge_dop, edge_dop_max, num1, num2, link, num;
+    int sum = 0, max = 0, max_dop = 0, ver_dop1 = 0;
+    sc_iterator5 *edgeses = sc_iterator5_f_a_a_a_f_new(context,
+                                                       graph,
+                                                       sc_type_arc_pos_const_perm,
+                                                       0,
+                                                       sc_type_arc_pos_const_perm,
+                                                       rrel_edges);
+    sc_iterator5_next(edgeses);
+    sc_addr edges = sc_iterator5_value(edgeses,2);
+
+
+
+    sc_iterator5 *set_edges = sc_iterator5_f_a_a_a_f_new(context,
+                                                         ver,
+                                                         sc_type_edge_common,
+                                                         0,
+                                                         sc_type_arc_pos_const_perm,
+                                                         edges);
+    while(SC_TRUE == sc_iterator5_next(set_edges)) {
+        sc_addr edge = sc_iterator5_value(set_edges, 1);
+        sc_iterator5 *ves = sc_iterator5_f_a_a_a_f_new(context,
+                                                       edge,
+                                                       sc_type_arc_common,
+                                                       0,
+                                                       sc_type_arc_pos_const_perm,
+                                                       nrel_weight);
+
+        if(SC_TRUE == sc_iterator5_next(ves)){
+        num = sc_iterator5_value(ves, 2);
+        sum += getInt(context, num);
+        sc_iterator5_free(ves);
+        if(max < getInt(context, num)){
+            max = getInt(context, num);
+            edge_max = edge;
+        }
+        }
+    }
+    sc_iterator5_free(set_edges);
+
+
+
+    cout << sum << " ";
+
+
+
+
+
+sc_iterator5 *other_max = sc_iterator5_f_a_a_a_f_new(context,
+                                                     ver,
+                                                     sc_type_edge_common,
+                                                     0,
+                                                     sc_type_arc_pos_const_perm,
+                                                     edges);
+while(SC_TRUE == sc_iterator5_next(other_max)) {
+    if(SC_ADDR_IS_EQUAL(sc_iterator5_value(other_max, 1), edge_max)) {
+        ver_max = sc_iterator5_value(other_max, 2);
+    }
+}
+sc_iterator5_free(other_max);
+//cout << "max ver ";
+//printEl(context, ver_max);
+cout << endl;
+
+
+
+
+
+other_max = sc_iterator5_f_a_a_a_f_new(context,
+                                       ver,
+                                       sc_type_edge_common,
+                                       0,
+                                       sc_type_arc_pos_const_perm,
+                                       edges);
+while(SC_TRUE == sc_iterator5_next(other_max)) {
+    if(SC_ADDR_IS_NOT_EQUAL(  sc_iterator5_value(other_max, 1),   edge_max)  ) {
+        ver_dop = sc_iterator5_value(other_max, 2);
+        edge_dop = sc_iterator5_value(other_max, 1);
+
+        //printEl(context, ver_dop);
+        //printEl(context, edge_dop);
+
+
+
+
+
+
+
+        sc_iterator5 *it1 = sc_iterator5_f_a_a_a_f_new(context,
+                                                       edge_dop,
+                                                       sc_type_arc_common,
+                                                       0,
+                                                       sc_type_arc_pos_const_perm,
+                                                       nrel_weight);
+        if(SC_TRUE == sc_iterator5_next(it1)){
+        num1 = sc_iterator5_value(it1, 2);
+        ver_dop1 = getInt(context, num1);
+        }
+        sc_iterator5_free(it1);
+
+
+
+
+
+
+
+
+
+        sc_iterator5 *iter = sc_iterator5_f_a_f_a_f_new(context,
+                                                     ver_dop,
+                                                     sc_type_edge_common,
+                                                     ver_max,
+                                                     sc_type_arc_pos_const_perm,
+                                                     edges);
+        if(SC_TRUE == sc_iterator5_next(iter)) {
+
+            edge_dop_max = sc_iterator5_value(iter, 1);
+
+            sc_iterator5 *it;
+            it = sc_iterator5_f_a_a_a_f_new(context,
+                                            edge_dop_max,
+                                            sc_type_arc_common,
+                                            0,
+                                            sc_type_arc_pos_const_perm,
+                                            nrel_weight);
+
+            if(SC_TRUE == sc_iterator5_next(it)){
+            num2 = sc_iterator5_value(it, 2);
+            max_dop = getInt(context, num2);
+            max_dop += ver_dop1;
+            num2 = genIntNode(context, max_dop);
+            //cout << "maxdop = "<<max_dop; printEl(context, num2); cout<<endl;
+            }
+            sc_iterator5_free(it);
+
+
+            //num1 = genIntNode(context, 0);
+            //num = genIntNode(context, 0);
+            //cout << ver_dop1 << max << max_dop;
+
+            sc_memory_element_free(context, num1);
+            sc_memory_element_free(context, num);
+
+
+
+
+        }
+        sc_iterator5_free(iter);
+
+    }
+
+}
+sc_iterator5_free(other_max);
+sc_iterator5_free(edgeses);
+
+}*/
+
+
+
+
+
+void min_razrez(){
+    sc_addr min_raz = sc_memory_link_new(context);
+    min_raz = genIntNode(context, 0);
+    sc_iterator5 *vertexes = sc_iterator5_f_a_a_a_f_new(context,
+                                                        graph,
+                                                        sc_type_arc_pos_const_perm,
+                                                        0,
+                                                        sc_type_arc_pos_const_perm,
+                                                        rrel_nodes);
+
+    if(SC_TRUE == sc_iterator5_next(vertexes)) {
+
+        sc_addr set_vertexes = sc_iterator5_value(vertexes, 2);
+        sc_iterator3 *it_vertex = sc_iterator3_f_a_a_new(context,
+                                                         set_vertexes,
+                                                         sc_type_arc_pos_const_perm,
+                                                         0);
+
+        while(SC_TRUE == sc_iterator3_next(it_vertex)) {
+
+            sc_addr ver = sc_iterator3_value(it_vertex, 2);
+            //glue(ver);
+
+        }
+        sc_iterator3_free(it_vertex);
+    }
+    sc_iterator5_free(vertexes);
+}
+
+
+
+
+
+
+int qwe[10],asd;
+void fun(int n, int m, int **a);
+
+
+
+
+void massiv(){
+
+
+
+
+    int kol = 0, lok = 0, **mas, i, j, k;
+
+    for (i = 0; i < 10; i++)
+    qwe[i] = 0;
+    asd = 0;
+
+    sc_addr ver, set_vertexes;
+
+    sc_iterator5 *edgeses = sc_iterator5_f_a_a_a_f_new(context,
+                                                       graph,
+                                                       sc_type_arc_pos_const_perm,
+                                                       0,
+                                                       sc_type_arc_pos_const_perm,
+                                                       rrel_edges);
+    sc_iterator5_next(edgeses);
+    sc_addr edges = sc_iterator5_value(edgeses,2);
+
+    sc_iterator5 *vertexes = sc_iterator5_f_a_a_a_f_new(context,
+                                                        graph,
+                                                        sc_type_arc_pos_const_perm,
+                                                        0,
+                                                        sc_type_arc_pos_const_perm,
+                                                        rrel_nodes);
+
+    if(SC_TRUE == sc_iterator5_next(vertexes)) {
+
+        set_vertexes = sc_iterator5_value(vertexes, 2);
+        sc_iterator3 *it_vertex = sc_iterator3_f_a_a_new(context,
+                                                         set_vertexes,
+                                                         sc_type_arc_pos_const_perm,
+                                                         0);
+
+        while(SC_TRUE == sc_iterator3_next(it_vertex)) {
+            kol++;
+            ver = sc_iterator3_value(it_vertex, 2);
+
+
+            sc_iterator5 *set_edges = sc_iterator5_f_a_a_a_f_new(context,
+                                                             ver,
+                                                             sc_type_edge_common,
+                                                             0,
+                                                             sc_type_arc_pos_const_perm,
+                                                             edges);
+            while(SC_TRUE == sc_iterator5_next(set_edges)){
+                lok++;
+            }
+            sc_iterator5_free(set_edges);
+        }
+        sc_iterator3_free(it_vertex);
+    }
+    sc_iterator5_free(vertexes);
+    //lok /= 2;
+
+    //cout << kol << " " << lok << endl;
+
+
+
+    sc_addr *mas_ver;
+    mas_ver = new sc_addr[kol];
+
+
+
+
+    mas = new int*[kol];
+    for (i = 0; i < kol; i++)
+    mas[i] = new int[lok];
+    for (i = 0; i < kol; i++)
+    for (j = 0; j < lok; j++)
+    mas[i][j] = 0;
+
+
+
+
+
+
+
+
+    sc_iterator3 *it_vertex = sc_iterator3_f_a_a_new(context,
+                                                     set_vertexes,
+                                                     sc_type_arc_pos_const_perm,
+                                                     0);
+    i=0;
+    while(SC_TRUE == sc_iterator3_next(it_vertex)) {
+        ver = sc_iterator3_value(it_vertex, 2);
+        mas_ver[i] = ver;
+        i++;
+    }
+    sc_iterator3_free(it_vertex);
+
+
+
+
+
+
+    it_vertex = sc_iterator3_f_a_a_new(context,
+                                       set_vertexes,
+                                       sc_type_arc_pos_const_perm,
+                                       0);
+    i=0;j=0;k=0;
+    while(SC_TRUE == sc_iterator3_next(it_vertex)) {
+        ver = sc_iterator3_value(it_vertex, 2);
+        sc_iterator5 *set_edges = sc_iterator5_f_a_a_a_f_new(context,
+                                                         ver,
+                                                         sc_type_edge_common,
+                                                         0,
+                                                         sc_type_arc_pos_const_perm,
+                                                         edges);
+        while(SC_TRUE == sc_iterator5_next(set_edges)) {
+            sc_addr ver1 = sc_iterator5_value(set_edges, 2);
+            sc_addr edge = sc_iterator5_value(set_edges, 1);
+            for(i=0;i<kol;i++){
+                if(SC_ADDR_IS_EQUAL(mas_ver[i], ver))
+                    break;
+            }
+            for(k=0;k<kol;k++){
+                if(SC_ADDR_IS_EQUAL(mas_ver[k], ver1))
+                    break;
+            }
+            sc_iterator5 *it = sc_iterator5_f_a_a_a_f_new(context,
+                                                          edge,
+                                                          sc_type_arc_common,
+                                                          0,
+                                                          sc_type_arc_pos_const_perm,
+                                                          nrel_weight);
+
+            if(SC_TRUE == sc_iterator5_next(it)){
+            sc_addr num = sc_iterator5_value(it, 2);
+            mas[i][j] = getInt(context, num);
+            mas[k][j] = mas[i][j];
+            j++;
+            }
+            sc_iterator5_free(it);
+
+        }
+        sc_iterator5_free(set_edges);
+
+
+
+    }
+    sc_iterator3_free(it_vertex);
+
+
+
+    for(i=0;i<kol;i++)
+        for(j=0;j<lok-1;j++){
+            if(mas[i][j]!=0){
+                for(k=j+1;k<lok;k++)
+                    if(mas[i][j]==mas[i][k])
+                        mas[i][k]=0;
+            }
+        }
+
+
+
+    /*for (i = 0; i < kol; i++) {
+        for (j = 0; j < lok; j++)
+            cout << mas[i][j] << " ";
+        cout << endl;
+    }*/
+
+
+    fun(kol, lok, mas);
+    //cout << endl;
+    j = qwe[0];
+    for (i = 0; i < asd; i++)
+    if (j > qwe[i] && qwe[i]!=0)
+    j = qwe[i];
+    cout << j << endl;
+
+
+}
+
+
+
+
+void fun(int n, int m, int **a) {
+int max = 0, i = 0, j = 0, str_max = 0, stol_max = 0, k = 0, schotchik = -1, *new_mas;
+for (i = 0; i < m; i++)
+if (max < a[n - 1][i])
+max = a[n - 1][i];
+if (n == 2) {
+qwe[asd] = max;
+asd++;
+return;
+}
+if (a[n - 1][m - 1] != max) {
+new_mas = new int[n - 1];
+for (i = 0; i < m; i++)
+if (a[n - 1][i] == max) break;
+for (j = 0; j < n; j++) {
+new_mas[j] = a[j][i];
+a[j][i] = a[j][m - 1];
+a[j][m - 1] = new_mas[j];
+}
+}
+
+for (i = 0; i < m; i++)
+if (a[n - 1][i] != 0)
+qwe[asd] += a[n - 1][i];
+asd++;
+
+for (i = 0; i < n - 1; i++)
+for (j = 0; j < m; j++)
+if (a[i][j] == max) {
+str_max = i;
+break;
+}
+
+
+
+for (i = 0; i < m; i++) {
+if (a[n - 1][i] != 0 && a[n - 1][i] != max) {
+for (j = 0; j < n - 1; j++) {
+if (a[j][i] != 0) {
+for (k = 0; k < m; k++)
+if (a[str_max][k] == a[j][k] && a[j][k] != 0) {
+a[str_max][k] += a[j][i];
+a[j][k] += a[j][i];
+a[n - 1][i] = 0;
+a[j][i] = 0;
+schotchik = 0;
+}
+if (schotchik == -1) {
+a[str_max][i] = a[n - 1][i];
+a[n - 1][i] = 0;
+}
+break;
+}
+}
+}
+}
+
+fun(n - 1, m - 1, a);
+}
+
+
+
+
+
+
+
+
+
+
+void run_test(char number_test){
+    char gr[3] = "Gx";
+    gr[1] = number_test;
+    sc_helper_resolve_system_identifier(context, gr, &graph);
+    sc_helper_resolve_system_identifier(context, "rrel_edges", &rrel_edges);
+    sc_helper_resolve_system_identifier(context, "rrel_nodes", &rrel_nodes);
+    sc_helper_resolve_system_identifier(context, "nrel_weight", &nrel_weight);
+    cout << "Test"<<number_test << " " <<" Minimal razrez is ";
+    min_razrez();
+    massiv();
+    cout << endl;
+}
+
+int main()
+{
+    sc_memory_params params;
+
+    sc_memory_params_clear(&params);
+    params.repo_path = "/home/alexey/ostis/kb.bin";
+    params.config_file = "/home/alexey/ostis/config/sc-web.ini";
+    params.ext_path = "/home/alexey/ostis/sc-machine/bin/extensions";
+    params.clear = SC_FALSE;
+
+    sc_memory_initialize(&params);
+    context = sc_memory_context_new(sc_access_lvl_make_max);
+
+    ///////////////////////////////////////////
+    run_test('0');
+    run_test('1');
+    run_test('2');
+    run_test('3');
+    run_test('4');
+    cout << endl;
+
+    sc_memory_context_free(context);
+    sc_memory_shutdown(SC_TRUE);
+
+    return 0;
+}
+
+/*edge_dop_max1 = sc_memory_arc_new(context, sc_type_edge_common, ver_dop, ver_max);
+sc_memory_arc_new(context, sc_type_arc_pos_const_perm, edges, edge_dop_max1);
+link = sc_memory_link_new(context);
+sc_memory_arc_new(context, sc_type_arc_pos_const_perm, edge_dop_max1, link);
+link = genIntNode(context, 0);
+edge_dop_max2 = sc_memory_arc_new(context, sc_type_edge_common, ver_max, ver_dop);
+sc_memory_arc_new(context, sc_type_arc_pos_const_perm, edges, edge_dop_max2);
+link = sc_memory_link_new(context);
+sc_memory_arc_new(context, sc_type_arc_pos_const_perm, edge_dop_max2, link);
+link = genIntNode(context, 0);*/
+

@@ -1,0 +1,11 @@
+graph -> G4 (*
+        -> rrel_node: V21;;
+        -> rrel_node: V22;;
+        -> rrel_node: V23;;
+
+        -> rrel_edge: (V21 ->  V22) (* ->  nrel_weight: [5];; *);;
+        -> rrel_edge: (V23 ->  V22) (* ->  nrel_weight: [6];; *);;
+        -> rrel_edge: (V22 ->  V23) (* ->  nrel_weight: [6];; *);;
+        -> rrel_edge: (V22 ->  V21) (* ->  nrel_weight: [5];; *);;
+
+*);;
